@@ -506,6 +506,11 @@ class LoadTableFromStorageJob(_AsyncJob):
     https://cloud.google.com/bigquery/docs/reference/v2/jobs#configuration.load.allowQuotedNewlines
     """
 
+    autodetect = _TypedProperty('autodetect', bool)
+    """See:
+    https://cloud.google.com/bigquery/docs/reference/v2/jobs#configuration.load.autodetect
+    """
+
     create_disposition = CreateDisposition('create_disposition')
     """See:
     https://cloud.google.com/bigquery/docs/reference/v2/jobs#configuration.load.createDisposition
@@ -525,6 +530,7 @@ class LoadTableFromStorageJob(_AsyncJob):
     """See:
     https://cloud.google.com/bigquery/docs/reference/v2/jobs#configuration.load.ignoreUnknownValues
     """
+
 
     max_bad_records = _TypedProperty('max_bad_records', six.integer_types)
     """See:
@@ -557,6 +563,8 @@ class LoadTableFromStorageJob(_AsyncJob):
             configuration['allowJaggedRows'] = self.allow_jagged_rows
         if self.allow_quoted_newlines is not None:
             configuration['allowQuotedNewlines'] = self.allow_quoted_newlines
+        if self.autodetect is not None:
+            configuration['autodetect'] = self.autodetect
         if self.create_disposition is not None:
             configuration['createDisposition'] = self.create_disposition
         if self.encoding is not None:
@@ -575,6 +583,7 @@ class LoadTableFromStorageJob(_AsyncJob):
             configuration['sourceFormat'] = self.source_format
         if self.write_disposition is not None:
             configuration['writeDisposition'] = self.write_disposition
+
 
     def _build_resource(self):
         """Generate a resource for :meth:`begin`."""
