@@ -868,11 +868,14 @@ class Blob(_PropertyMixin):
             method='POST', path=source.path + '/rewriteTo' + self.path,
             query_params=query_params, data=self._properties, headers=headers,
             _target_object=self)
-        self._set_properties(api_response['resource'])
         rewritten = int(api_response['totalBytesRewritten'])
         size = int(api_response['objectSize'])
 
+        # The resource key is set if and only if the API response is
+        # completely done. Additionally, there is no rewrite token to return
+        # in this case.
         if api_response['done']:
+            self._set_properties(api_response['resource'])
             return None, rewritten, size
 
         return api_response['rewriteToken'], rewritten, size
@@ -940,7 +943,7 @@ class Blob(_PropertyMixin):
     content_language = _scalar_property('contentLanguage')
     """HTTP 'Content-Language' header for this object.
 
-    See: http://tools.ietf.org/html/bcp47 and
+    See: https://tools.ietf.org/html/bcp47 and
          https://cloud.google.com/storage/docs/json_api/v1/objects
 
     If the property is not set locally, returns ``None``.
@@ -962,7 +965,7 @@ class Blob(_PropertyMixin):
     crc32c = _scalar_property('crc32c')
     """CRC32C checksum for this object.
 
-    See: http://tools.ietf.org/html/rfc4960#appendix-B and
+    See: https://tools.ietf.org/html/rfc4960#appendix-B and
          https://cloud.google.com/storage/docs/json_api/v1/objects
 
     If the property is not set locally, returns ``None``.
@@ -989,7 +992,7 @@ class Blob(_PropertyMixin):
     def etag(self):
         """Retrieve the ETag for the object.
 
-        See: http://tools.ietf.org/html/rfc2616#section-3.11 and
+        See: https://tools.ietf.org/html/rfc2616#section-3.11 and
              https://cloud.google.com/storage/docs/json_api/v1/objects
 
         :rtype: str or ``NoneType``
@@ -1026,7 +1029,7 @@ class Blob(_PropertyMixin):
     md5_hash = _scalar_property('md5Hash')
     """MD5 hash for this object.
 
-    See: http://tools.ietf.org/html/rfc4960#appendix-B and
+    See: https://tools.ietf.org/html/rfc4960#appendix-B and
          https://cloud.google.com/storage/docs/json_api/v1/objects
 
     If the property is not set locally, returns ``None``.

@@ -51,7 +51,7 @@ SETUP_BASE = {
 
 REQUIREMENTS = [
     'google-cloud-core >= 0.23.1, < 0.24dev',
-    'grpcio >= 1.0.2, < 2.0dev',
+    'grpcio >= 1.2.0, < 2.0dev',
     'gapic-google-cloud-spanner-v1 >= 0.15.0, < 0.16dev',
     'gapic-google-cloud-spanner-admin-database-v1 >= 0.15.0, < 0.16dev',
     'gapic-google-cloud-spanner-admin-instance-v1 >= 0.15.0, < 0.16dev',
@@ -66,7 +66,7 @@ setup(
         'google',
         'google.cloud',
     ],
-    packages=find_packages(),
+    packages=find_packages(exclude=('unit_tests*',)),
     install_requires=REQUIREMENTS,
     **SETUP_BASE
 )
